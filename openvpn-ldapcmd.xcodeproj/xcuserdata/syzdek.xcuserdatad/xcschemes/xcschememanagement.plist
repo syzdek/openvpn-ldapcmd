@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>openvpn-ldapcmd.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>A0DD32931E26EBEC00A95CA7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A0DD32CF1E270B3600A95CA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

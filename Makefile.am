@@ -75,7 +75,7 @@ doc_DATA				= AUTHORS \
 doxygen_DATA				=
 include_HEADERS				=
 lib_LTLIBRARIES				=
-libexec_SCRIPT				= src/openvpn-ldapcmd.profile
+libexec_SCRIPT				= src/scripts/openvpn-ldapcmd.profile
 man_MANS				=
 info_TEXINFOS				=
 noinst_DATA				=
@@ -87,7 +87,7 @@ bin_PROGRAMS				=
 bin_SCRIPTS				=
 pkgconf_DATA				=
 pkgdata_DATA				=
-sbin_SCRIPTS				= src/openvpn-ldapcmd-test.sh
+sbin_SCRIPTS				= src/scripts/openvpn-ldapcmd-test.sh
 
 
 # lists
@@ -100,8 +100,9 @@ EXTRA_DIST				= \
 					  ChangeLog.md \
 					  NEWS.md \
 					  README.md \
-					  src/openvpn-ldapcmd.profile \
-					  src/openvpn-ldapcmd-test.sh.in
+					  src/scripts/openvpn-ldapcmd.profile \
+					  src/scripts/openvpn-ldapcmd-test.sh.in \
+					  src/utils/Makefile
 CLEANFILES				= \
 					  $(builddir)/a.out   $(srcdir)/a.out \
 					  $(builddir)/*/a.out $(srcdir)/*/a.out \
@@ -132,7 +133,7 @@ src_ldapoptions_DEPENDENCIES		=
 src_ldapoptions_SOURCES			= \
 					  $(include_HEADERS) \
 					  $(noinst_HEADERS) \
-					  src/ldapoptions.c
+					  src/utils/ldapoptions.c
 
 
 # Makefile includes
@@ -146,7 +147,7 @@ include $(srcdir)/@bindletools_srcdir@/build-aux/makefile-version.am
 # custom targets
 .PHONY:
 
-src/openvpn-ldapcmd-test.sh: Makefile src/openvpn-ldapcmd-test.sh.in
+src/scripts/openvpn-ldapcmd-test.sh: Makefile src/scripts/openvpn-ldapcmd-test.sh.in
 	@$(do_subst_fn)
 
 # local targets
