@@ -87,6 +87,7 @@ bin_PROGRAMS				=
 bin_SCRIPTS				=
 pkgconf_DATA				=
 pkgdata_DATA				=
+sbin_PROGRAMS				= src/openvpn-ldapcmd
 sbin_SCRIPTS				= src/scripts/openvpn-ldapcmd-test.sh
 
 
@@ -134,6 +135,16 @@ src_ldapoptions_SOURCES			= \
 					  $(include_HEADERS) \
 					  $(noinst_HEADERS) \
 					  src/utils/ldapoptions.c
+
+
+# macros for src/openvpn-ldapcmd
+src_openvpn_ldapcmd_DEPENDENCIES	=
+src_openvpn_ldapcmd_SOURCES		= \
+					  $(include_HEADERS) \
+					  $(noinst_HEADERS) \
+					  src/ldapcmd/common.c \
+					  src/ldapcmd/common.h \
+					  src/ldapcmd/main.c
 
 
 # Makefile includes

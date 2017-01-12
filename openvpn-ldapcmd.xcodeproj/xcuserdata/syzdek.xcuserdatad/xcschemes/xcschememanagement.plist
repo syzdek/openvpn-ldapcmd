@@ -14,6 +14,16 @@
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>openvpn-ldapcmd: Git Version.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>openvpn-ldapcmd: all.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -28,6 +38,16 @@
 			<true/>
 		</dict>
 		<key>A0DD32CF1E270B3600A95CA7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A0DD32E21E27111800A95CA7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A0DD32F71E27150900A95CA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

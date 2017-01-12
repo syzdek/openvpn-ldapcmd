@@ -6,11 +6,40 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		A0DD32E21E27111800A95CA7 /* openvpn-ldapcmd: Git Version */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A0DD32E31E27111800A95CA7 /* Build configuration list for PBXAggregateTarget "openvpn-ldapcmd: Git Version" */;
+			buildPhases = (
+				A0DD32E61E27112C00A95CA7 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "openvpn-ldapcmd: Git Version";
+			productName = "openvpn-ldapcmd: Git Version";
+		};
+		A0DD32F71E27150900A95CA7 /* openvpn-ldapcmd: all */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A0DD32F81E27150900A95CA7 /* Build configuration list for PBXAggregateTarget "openvpn-ldapcmd: all" */;
+			buildPhases = (
+			);
+			dependencies = (
+				A0DD32FC1E27150F00A95CA7 /* PBXTargetDependency */,
+				A0DD32FE1E27150F00A95CA7 /* PBXTargetDependency */,
+			);
+			name = "openvpn-ldapcmd: all";
+			productName = "openvpn-ldapcmd: all";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		A0DD329F1E26ECE400A95CA7 /* liblber-2.4.2.10.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD329D1E26ECE400A95CA7 /* liblber-2.4.2.10.7.dylib */; };
-		A0DD32A01E26ECE400A95CA7 /* libldap-2.4.2.10.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD329E1E26ECE400A95CA7 /* libldap-2.4.2.10.7.dylib */; };
 		A0DD32A21E26ECFE00A95CA7 /* ldapoptions.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD328D1E26EAE600A95CA7 /* ldapoptions.c */; };
-		A0DD32C91E26F5FA00A95CA7 /* NEWS.md in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32C81E26F5FA00A95CA7 /* NEWS.md */; };
+		A0DD32DC1E270DD100A95CA7 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32DA1E270DBC00A95CA7 /* main.c */; };
+		A0DD32E11E27101F00A95CA7 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32DE1E270E1400A95CA7 /* common.c */; };
+		A0DD32F21E2714CA00A95CA7 /* libldap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F11E2714CA00A95CA7 /* libldap.tbd */; };
+		A0DD32F41E2714D400A95CA7 /* liblber.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F31E2714D400A95CA7 /* liblber.tbd */; };
+		A0DD32F51E2714E400A95CA7 /* libldap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F11E2714CA00A95CA7 /* libldap.tbd */; };
+		A0DD32F61E2714EA00A95CA7 /* liblber.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F31E2714D400A95CA7 /* liblber.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +70,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = A00F6E9E194278C5003CC8C2;
 			remoteInfo = cnftest;
+		};
+		A0DD32EF1E27116800A95CA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0DD32781E26EA9C00A95CA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0DD32E21E27111800A95CA7;
+			remoteInfo = "openvpn-ldapcmd: Git Version";
+		};
+		A0DD32FB1E27150F00A95CA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0DD32781E26EA9C00A95CA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0DD32931E26EBEC00A95CA7;
+			remoteInfo = ldapoptions;
+		};
+		A0DD32FD1E27150F00A95CA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0DD32781E26EA9C00A95CA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0DD32CF1E270B3600A95CA7;
+			remoteInfo = "openvpn-ldapcmd";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -88,6 +138,11 @@
 		A0DD32CA1E26FE2500A95CA7 /* openvpn-ldapcmd-test.sh.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "openvpn-ldapcmd-test.sh.in"; sourceTree = "<group>"; };
 		A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = "openvpn-ldapcmd.profile"; sourceTree = "<group>"; };
 		A0DD32D01E270B3600A95CA7 /* openvpn-ldapcmd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "openvpn-ldapcmd"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0DD32DA1E270DBC00A95CA7 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A0DD32DE1E270E1400A95CA7 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
+		A0DD32DF1E270E1400A95CA7 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		A0DD32F11E2714CA00A95CA7 /* libldap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libldap.tbd; path = usr/lib/libldap.tbd; sourceTree = SDKROOT; };
+		A0DD32F31E2714D400A95CA7 /* liblber.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = liblber.tbd; path = usr/lib/liblber.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0DD329F1E26ECE400A95CA7 /* liblber-2.4.2.10.7.dylib in Frameworks */,
-				A0DD32A01E26ECE400A95CA7 /* libldap-2.4.2.10.7.dylib in Frameworks */,
+				A0DD32F41E2714D400A95CA7 /* liblber.tbd in Frameworks */,
+				A0DD32F21E2714CA00A95CA7 /* libldap.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +159,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DD32F61E2714EA00A95CA7 /* liblber.tbd in Frameworks */,
+				A0DD32F51E2714E400A95CA7 /* libldap.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +211,8 @@
 		A0DD32A11E26ECF000A95CA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0DD32F31E2714D400A95CA7 /* liblber.tbd */,
+				A0DD32F11E2714CA00A95CA7 /* libldap.tbd */,
 				A0DD329D1E26ECE400A95CA7 /* liblber-2.4.2.10.7.dylib */,
 				A0DD329E1E26ECE400A95CA7 /* libldap-2.4.2.10.7.dylib */,
 			);
@@ -207,6 +266,9 @@
 		A0DD32D71E270B7500A95CA7 /* ldapcmd */ = {
 			isa = PBXGroup;
 			children = (
+				A0DD32DE1E270E1400A95CA7 /* common.c */,
+				A0DD32DF1E270E1400A95CA7 /* common.h */,
+				A0DD32DA1E270DBC00A95CA7 /* main.c */,
 			);
 			path = ldapcmd;
 			sourceTree = "<group>";
@@ -260,6 +322,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A0DD32F01E27116800A95CA7 /* PBXTargetDependency */,
 			);
 			name = "openvpn-ldapcmd";
 			productName = "openvpn-ldapcmd";
@@ -278,6 +341,12 @@
 						CreatedOnToolsVersion = 7.3;
 					};
 					A0DD32CF1E270B3600A95CA7 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					A0DD32E21E27111800A95CA7 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					A0DD32F71E27150900A95CA7 = {
 						CreatedOnToolsVersion = 7.3;
 					};
 				};
@@ -302,6 +371,8 @@
 			targets = (
 				A0DD32931E26EBEC00A95CA7 /* ldapoptions */,
 				A0DD32CF1E270B3600A95CA7 /* openvpn-ldapcmd */,
+				A0DD32E21E27111800A95CA7 /* openvpn-ldapcmd: Git Version */,
+				A0DD32F71E27150900A95CA7 /* openvpn-ldapcmd: all */,
 			);
 		};
 /* End PBXProject section */
@@ -337,13 +408,28 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A0DD32E61E27112C00A95CA7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "contrib/bindletools/build-aux/git-package-version.sh ${PROJECT_DIR} ${PROJECT_DIR}/include";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A0DD32901E26EBEC00A95CA7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A0DD32A21E26ECFE00A95CA7 /* ldapoptions.c in Sources */,
-				A0DD32C91E26F5FA00A95CA7 /* NEWS.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,16 +437,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DD32E11E27101F00A95CA7 /* common.c in Sources */,
+				A0DD32DC1E270DD100A95CA7 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A0DD32F01E27116800A95CA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0DD32E21E27111800A95CA7 /* openvpn-ldapcmd: Git Version */;
+			targetProxy = A0DD32EF1E27116800A95CA7 /* PBXContainerItemProxy */;
+		};
+		A0DD32FC1E27150F00A95CA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0DD32931E26EBEC00A95CA7 /* ldapoptions */;
+			targetProxy = A0DD32FB1E27150F00A95CA7 /* PBXContainerItemProxy */;
+		};
+		A0DD32FE1E27150F00A95CA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0DD32CF1E270B3600A95CA7 /* openvpn-ldapcmd */;
+			targetProxy = A0DD32FD1E27150F00A95CA7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		A0DD327C1E26EA9C00A95CA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /opt/local/include;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				HEADER_SEARCH_PATHS = include;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 			};
 			name = Debug;
@@ -368,7 +475,8 @@
 		A0DD327D1E26EA9C00A95CA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /opt/local/include;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				HEADER_SEARCH_PATHS = include;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 			};
 			name = Release;
@@ -547,6 +655,34 @@
 			};
 			name = Release;
 		};
+		A0DD32E41E27111800A95CA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A0DD32E51E27111800A95CA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A0DD32F91E27150900A95CA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A0DD32FA1E27150900A95CA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -572,6 +708,22 @@
 			buildConfigurations = (
 				A0DD32D51E270B3600A95CA7 /* Debug */,
 				A0DD32D61E270B3600A95CA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A0DD32E31E27111800A95CA7 /* Build configuration list for PBXAggregateTarget "openvpn-ldapcmd: Git Version" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0DD32E41E27111800A95CA7 /* Debug */,
+				A0DD32E51E27111800A95CA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A0DD32F81E27150900A95CA7 /* Build configuration list for PBXAggregateTarget "openvpn-ldapcmd: all" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0DD32F91E27150900A95CA7 /* Debug */,
+				A0DD32FA1E27150900A95CA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
