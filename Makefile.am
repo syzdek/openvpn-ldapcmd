@@ -75,6 +75,7 @@ doc_DATA				= AUTHORS \
 doxygen_DATA				=
 include_HEADERS				=
 lib_LTLIBRARIES				=
+libexec_SCRIPT				= src/openvpn-ldapcmd.profile
 man_MANS				=
 info_TEXINFOS				=
 noinst_DATA				=
@@ -86,7 +87,7 @@ bin_PROGRAMS				=
 bin_SCRIPTS				=
 pkgconf_DATA				=
 pkgdata_DATA				=
-sbin_SCRIPTS				=
+sbin_SCRIPTS				= src/openvpn-ldapcmd-test.sh
 
 
 # lists
@@ -98,7 +99,9 @@ EXTRA_MANS				=
 EXTRA_DIST				= \
 					  ChangeLog.md \
 					  NEWS.md \
-					  README.md
+					  README.md \
+					  src/openvpn-ldapcmd.profile \
+					  src/openvpn-ldapcmd-test.sh.in
 CLEANFILES				= \
 					  $(builddir)/a.out   $(srcdir)/a.out \
 					  $(builddir)/*/a.out $(srcdir)/*/a.out \
@@ -111,7 +114,8 @@ CLEANFILES				= \
 					  @PACKAGE_TARNAME@-*.tar.* \
 					  @PACKAGE_TARNAME@-*.txz \
 					  @PACKAGE_TARNAME@-*.zip
-DISTCHECK_CONFIGURE_FLAGS		= --enable-strictwarnings
+DISTCHECK_CONFIGURE_FLAGS		= --enable-strictwarnings \
+					  --enable-ldapoptions
 
 
 # macros for doc/doxygen
@@ -142,6 +146,8 @@ include $(srcdir)/@bindletools_srcdir@/build-aux/makefile-version.am
 # custom targets
 .PHONY:
 
+src/openvpn-ldapcmd-test.sh: Makefile src/openvpn-ldapcmd-test.sh.in
+	@$(do_subst_fn)
 
 # local targets
 install-exec-local:
