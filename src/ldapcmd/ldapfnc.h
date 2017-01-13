@@ -31,8 +31,9 @@
  *
  *  @SYZDEK_BSD_LICENSE_END@
  */
-#define __MAIN_C 1
-#undef __OVPNLDAPCMD_PMARK
+#ifndef __LDAPFNC_H
+#define __LDAPFNC_H 1
+
 
 ///////////////
 //           //
@@ -44,15 +45,6 @@
 #endif
 
 #include "common.h"
-#include "ldapfnc.h"
-
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <strings.h>
-#include <stdlib.h>
-#include <getopt.h>
-#include <syslog.h>
 
 
 ///////////////////
@@ -65,6 +57,16 @@
 #endif
 
 
+/////////////////
+//             //
+//  Datatypes  //
+//             //
+/////////////////
+#ifdef __OVPNLDAPCMD_PMARK
+#pragma mark - Datatypes
+#endif
+
+
 //////////////////
 //              //
 //  Prototypes  //
@@ -74,53 +76,11 @@
 #pragma mark - Prototypes
 #endif
 
-int main(int argc, char * argv[]);
+int ovlc_ldap_initialize(ovlc * od);
+int ovlc_ldap_opt_dump(ovlc * od);
+void ovlc_ldap_opt_dump_int(LDAP * ld, int opt, const char * name);
+void ovlc_ldap_opt_dump_str(LDAP * ld, int opt, const char * name);
+void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name);
 
 
-/////////////////
-//             //
-//  Functions  //
-//             //
-/////////////////
-#ifdef __OVPNLDAPCMD_PMARK
-#pragma mark - Functions
-#endif
-
-int main(int argc, char * argv[])
-{
-   int           rc;
-   ovlc        * od;
-
-   // initialize memory
-   if ((rc = ovlc_initialize(&od, argv[0])) != 0)
-      return(1);
-
-   // parse CLI arguments
-   if ((rc = ovlc_parseopt(od, argc, argv)) != 0)
-   {
-      ovlc_destroy(od);
-      rc = (rc == -1) ? 0 : rc;
-      return(rc);
-   };
-
-   // initialize syslog
-   openlog(PROGRAM_NAME, od->syslog_option, od->syslog_facility);
-
-   // initialize LDAP
-   if ((rc = ovlc_ldap_initialize(od)) != 0)
-   {
-      ovlc_destroy(od);
-      rc = (rc == -1) ? 0 : rc;
-      return(rc);
-   };
-
-   ovlc_ldap_opt_dump(od);
-
-   // free resources
-   ovlc_destroy(od);
-
-   return(0);
-}
-
-
-/* end of source */
+#endif /* Header_h */

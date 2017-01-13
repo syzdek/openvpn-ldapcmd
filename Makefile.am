@@ -144,6 +144,8 @@ src_openvpn_ldapcmd_SOURCES		= \
 					  $(noinst_HEADERS) \
 					  src/ldapcmd/common.c \
 					  src/ldapcmd/common.h \
+					  src/ldapcmd/ldapfnc.c \
+					  src/ldapcmd/ldapfnc.h \
 					  src/ldapcmd/main.c
 
 

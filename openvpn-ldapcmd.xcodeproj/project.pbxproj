@@ -40,6 +40,7 @@
 		A0DD32F41E2714D400A95CA7 /* liblber.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F31E2714D400A95CA7 /* liblber.tbd */; };
 		A0DD32F51E2714E400A95CA7 /* libldap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F11E2714CA00A95CA7 /* libldap.tbd */; };
 		A0DD32F61E2714EA00A95CA7 /* liblber.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F31E2714D400A95CA7 /* liblber.tbd */; };
+		A0DD33021E297E7800A95CA7 /* ldapfnc.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32FF1E297C5B00A95CA7 /* ldapfnc.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,8 @@
 		A0DD32DF1E270E1400A95CA7 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		A0DD32F11E2714CA00A95CA7 /* libldap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libldap.tbd; path = usr/lib/libldap.tbd; sourceTree = SDKROOT; };
 		A0DD32F31E2714D400A95CA7 /* liblber.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = liblber.tbd; path = usr/lib/liblber.tbd; sourceTree = SDKROOT; };
+		A0DD32FF1E297C5B00A95CA7 /* ldapfnc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldapfnc.c; sourceTree = "<group>"; };
+		A0DD33001E297C5B00A95CA7 /* ldapfnc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldapfnc.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +271,8 @@
 			children = (
 				A0DD32DE1E270E1400A95CA7 /* common.c */,
 				A0DD32DF1E270E1400A95CA7 /* common.h */,
+				A0DD32FF1E297C5B00A95CA7 /* ldapfnc.c */,
+				A0DD33001E297C5B00A95CA7 /* ldapfnc.h */,
 				A0DD32DA1E270DBC00A95CA7 /* main.c */,
 			);
 			path = ldapcmd;
@@ -439,6 +444,7 @@
 			files = (
 				A0DD32E11E27101F00A95CA7 /* common.c in Sources */,
 				A0DD32DC1E270DD100A95CA7 /* main.c in Sources */,
+				A0DD33021E297E7800A95CA7 /* ldapfnc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -152,11 +152,6 @@ typedef struct openvpn_ldapcmd ovlc;
 void ovlc_destroy(ovlc * od);
 int ovlc_parseopt(ovlc * od, int argc, char ** argv);
 int ovlc_initialize(ovlc ** odp, const char * arg1);
-int ovlc_initialize_ldap(ovlc * od);
-int ovlc_ldap_opt_dump(ovlc * od);
-void ovlc_ldap_opt_dump_int(LDAP * ld, int opt, const char * name);
-void ovlc_ldap_opt_dump_str(LDAP * ld, int opt, const char * name);
-void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name);
 void ovlc_usage(ovlc * od);
 void ovlc_version(ovlc * od);
 

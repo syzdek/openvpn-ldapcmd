@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E1BF9DB12AAFAABDCBD24A352F179FDC26EB9DF8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "FE37CB5D6B147ECC3F371320E7D6E6C6E158194B" : 0,
+    "E1BF9DB12AAFAABDCBD24A352F179FDC26EB9DF8" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "49A0A773-9EB4-45D0-A89E-F6C1058AB84E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "FE37CB5D6B147ECC3F371320E7D6E6C6E158194B" : "openvpn-ldapcmd\/contrib\/bindletools\/",
+    "E1BF9DB12AAFAABDCBD24A352F179FDC26EB9DF8" : "openvpn-ldapcmd\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "openvpn-ldapcmd",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "openvpn-ldapcmd.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:syzdek\/openvpn-ldapcmd.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E1BF9DB12AAFAABDCBD24A352F179FDC26EB9DF8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bindle\/bindletools.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FE37CB5D6B147ECC3F371320E7D6E6C6E158194B"
+    }
+  ]
+}
