@@ -96,12 +96,48 @@
 #pragma mark - Datatypes
 #endif
 
+enum openvpn_type
+{
+   Unknown              = -1,
+   Undefined            = 0,
+   UserPassVerify       = 1,
+   ClientConnect        = 2,
+   ClientDisconnect     = 3,
+};
+typedef enum openvpn_type ovlc_type;
+
+
 struct openvpn_ldapcmd
 {
-   const char  * prog_name;
-   LDAP        * ld;
+   char           * cmd_arg;
+   char           * ldap_basedn;
+   char           * ldap_filter;
+   char           * ldap_uri;
+   char           * ovpn_untrusted_ip;
+   char           * ovpn_trusted_ip;
+   char           * ovpn_pool_remote_ip;
+   char           * ovpn_pool_remote_ip6;
+   char           * ovpn_common_name;
+   char           * ovpn_username;
+   char           * ovpn_password;
+   char           * ovpn_profile;
+   char           * ovpn_profiledir;
+   char           * prog_conf;
+   char           * prog_name;
+   int              ldap_deref;
+   int              ldap_debug;
+   int              ldap_limit;
+   int              ldap_scope;
+   int              ldap_tls_cert;
+   int              ldap_version;
+   int              ovpn_verb;
+   int              syslog_facility;
+   int              syslog_option;
+   int              continue_on_error;
+   ovlc_type        script_type;
+   LDAP           * ld;
 };
-typedef struct openvpn_ldapcmd OVPNLDAPCMD;
+typedef struct openvpn_ldapcmd ovlc;
 
 
 //////////////////
@@ -113,8 +149,15 @@ typedef struct openvpn_ldapcmd OVPNLDAPCMD;
 #pragma mark - Prototypes
 #endif
 
-void ovlc_destroy(OVPNLDAPCMD * od);
-int ovlc_initialize(OVPNLDAPCMD ** odp, const char * arg1);
-
+void ovlc_destroy(ovlc * od);
+int ovlc_parseopt(ovlc * od, int argc, char ** argv);
+int ovlc_initialize(ovlc ** odp, const char * arg1);
+int ovlc_initialize_ldap(ovlc * od);
+int ovlc_ldap_opt_dump(ovlc * od);
+void ovlc_ldap_opt_dump_int(LDAP * ld, int opt, const char * name);
+void ovlc_ldap_opt_dump_str(LDAP * ld, int opt, const char * name);
+void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name);
+void ovlc_usage(ovlc * od);
+void ovlc_version(ovlc * od);
 
 #endif /* Header_h */

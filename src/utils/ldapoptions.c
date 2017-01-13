@@ -139,6 +139,11 @@ int main(int argc, char * argv[])
       };
    };
 
+   if (optind < argc)
+   {
+      ldap_set_option(NULL, LDAP_OPT_URI, argv[optind]);
+   };
+
    if ((rc = ldap_initialize(&ld, NULL)) != LDAP_SUCCESS)
    {
       log_err("ldap_initialize(): %s", ldap_err2string(rc));

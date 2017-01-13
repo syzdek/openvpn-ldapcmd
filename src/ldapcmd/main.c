@@ -45,11 +45,13 @@
 
 #include "common.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <syslog.h>
 
 
 ///////////////////
@@ -72,8 +74,6 @@
 #endif
 
 int main(int argc, char * argv[]);
-void usage(OVPNLDAPCMD * od);
-void version(OVPNLDAPCMD * od);
 
 
 /////////////////
@@ -87,80 +87,39 @@ void version(OVPNLDAPCMD * od);
 
 int main(int argc, char * argv[])
 {
-   int                    c;
-   int                    rc;
-   int                    opt_index;
-   OVPNLDAPCMD          * od;
+   int           rc;
+   ovlc        * od;
 
-   static char          short_opt[] = "c:d:hTVvq+";
-   static struct option long_opt[] =
-   {
-      { "help",          no_argument, 0, 'h'},
-      { "version",       no_argument, 0, 'V'},
-      { "version-terse", no_argument, 0, 'V'},
-      { NULL,            0,           0, 0  }
-   };
-
-   assert(argc != 0);
-   assert(argv != NULL);
-
+   // initialize memory
    if ((rc = ovlc_initialize(&od, argv[0])) != 0)
       return(1);
 
-   while((c = getopt_long(argc, argv, short_opt, long_opt, &opt_index)) != -1)
+   // parse CLI arguments
+   if ((rc = ovlc_parseopt(od, argc, argv)) != 0)
    {
-      switch(c)
-      {
-         case -1:	/* no more arguments */
-         case 0:	/* long options toggles */
-         break;
-
-         case 'h':
-         usage(od);
-         ovlc_destroy(od);
-         return(0);
-
-         case 'V':
-         version(od);
-         ovlc_destroy(od);
-         return(0);
-
-         default:
-         fprintf(stderr, "%s: unrecognized option `--%c'\n", od->prog_name, c);
-         fprintf(stderr, "Try `%s --help' for more information.\n", od->prog_name);
-         ovlc_destroy(od);
-         return(1);
-      };
+      ovlc_destroy(od);
+      rc = (rc == -1) ? 0 : rc;
+      return(rc);
    };
 
+   // initialize syslog
+   openlog(PROGRAM_NAME, od->syslog_option, od->syslog_facility);
+
+   // initialize LDAP
+   if ((rc = ovlc_initialize_ldap(od)) != 0)
+   {
+      ovlc_destroy(od);
+      rc = (rc == -1) ? 0 : rc;
+      return(rc);
+   };
+
+   ovlc_ldap_opt_dump(od);
+
+   // free resources
    ovlc_destroy(od);
 
    return(0);
 }
-
-
-void usage(OVPNLDAPCMD * od)
-{
-   printf("Usage: %s [OPTIONS]\n", od->prog_name);
-   printf("Common Options:\n");
-   printf("  -c file                   configuration file\n");
-   printf("  -d level                  set debug level\n");
-   printf("  -h, --help                print this help and exit\n");
-   printf("  -V, --version             print version number and exit\n");
-   printf("  -v, --verbose             print verbose messages\n");
-   printf("  -T, --version-terse       print version number and exit\n");
-   printf("  -q, --quiet, --silent     do not print messages\n");
-   printf("\n");
-   return;
-}
-
-
-void version(OVPNLDAPCMD * od)
-{
-   printf("%s (%s) %s\n", od->prog_name, PACKAGE_TARNAME, GIT_PACKAGE_VERSION_BUILD);
-   printf("\n");
-   return;
-};
 
 
 /* end of source */
