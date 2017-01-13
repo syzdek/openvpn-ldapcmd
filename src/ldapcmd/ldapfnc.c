@@ -85,19 +85,14 @@ extern char **environ;
 
 int ovlc_ldap_initialize(ovlc * od)
 {
-   int valint;
    int rc;
 
    assert(od != NULL);
 
-   if (od->ldap_debug != -1)
+   if ((rc = ovlc_ldap_set_option_int(NULL, LDAP_OPT_DEBUG_LEVEL, od->ldap_debug)) != LDAP_SUCCESS)
    {
-      valint = od->ldap_debug;
-      if ((rc = ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, &valint)) != LDAP_SUCCESS)
-      {
-         syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_DEBUG_LEVEL): %s", ldap_err2string(rc));
-         return(1);
-      };
+      syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_DEBUG_LEVEL): %s", ldap_err2string(rc));
+      return(1);
    };
 
    if ((rc = ldap_initialize(&od->ld, od->ldap_uri)) != LDAP_SUCCESS)
@@ -106,31 +101,40 @@ int ovlc_ldap_initialize(ovlc * od)
       return(1);
    };
 
-   valint = 5;
-   if ((rc = ldap_set_option(od->ld, LDAP_OPT_SIZELIMIT, &valint)) != LDAP_SUCCESS)
+   if ((rc = ovlc_ldap_set_option_int(od->ld, LDAP_OPT_SIZELIMIT, 5)) != LDAP_SUCCESS)
    {
       syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_SIZELIMIT): %s", ldap_err2string(rc));
       return(1);
    };
 
-   if (od->ldap_deref != -1)
+   if ((rc = ovlc_ldap_set_option_int(od->ld, LDAP_OPT_DEREF, od->ldap_deref)) != LDAP_SUCCESS)
    {
-      valint = od->ldap_deref;
-      if ((rc = ldap_set_option(od->ld, LDAP_OPT_DEREF, &valint)) != LDAP_SUCCESS)
-      {
-         syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_DEREF): %s", ldap_err2string(rc));
-         return(1);
-      };
+      syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_DEREF): %s", ldap_err2string(rc));
+      return(1);
    };
 
-   if (od->ldap_limit != -1)
+   if ((rc = ovlc_ldap_set_option_int(od->ld, LDAP_OPT_TIMELIMIT, od->ldap_limit)) != LDAP_SUCCESS)
    {
-      valint = od->ldap_limit;
-      if ((rc = ldap_set_option(od->ld, LDAP_OPT_TIMELIMIT, &valint)) != LDAP_SUCCESS)
-      {
-         syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_TIMELIMIT): %s", ldap_err2string(rc));
-         return(1);
-      };
+      syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_TIMELIMIT): %s", ldap_err2string(rc));
+      return(1);
+   };
+
+   if (od->ldap_tls_cert == 0)
+      od->ldap_tls_cert = LDAP_OPT_X_TLS_NEVER;
+   else if (od->ldap_tls_cert == 1)
+      od->ldap_tls_cert = LDAP_OPT_X_TLS_TRY;
+   else
+      od->ldap_tls_cert = LDAP_OPT_X_TLS_HARD;
+   if ((rc = ovlc_ldap_set_option_int(od->ld, LDAP_OPT_X_TLS_REQUIRE_CERT, od->ldap_tls_cert)) != LDAP_SUCCESS)
+   {
+      syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_X_TLS_REQUIRE_CERT): %s", ldap_err2string(rc));
+      return(1);
+   };
+
+   if ((rc = ovlc_ldap_set_option_int(od->ld, LDAP_OPT_PROTOCOL_VERSION, od->ldap_version)) != LDAP_SUCCESS)
+   {
+      syslog(LOG_ERR, "ldap_set_option(LDAP_OPT_PROTOCOL_VERSION): %s", ldap_err2string(rc));
+      return(1);
    };
 
    return(0);
@@ -257,6 +261,27 @@ void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name)
    return;
 }
 
+
+int ovlc_ldap_set_option_int(LDAP *ld, int option, const int invalue)
+{
+   if (invalue == -1)
+      return(LDAP_SUCCESS);
+   return(ldap_set_option(ld, option, &invalue));
+}
+
+
+int ovlc_ldap_set_option_str(LDAP *ld, int option, const char * invalue)
+{
+   if (invalue == NULL)
+      return(LDAP_SUCCESS);
+   return(ldap_set_option(ld, option, &invalue));
+}
+
+
+int ovlc_ldap_set_option_time(LDAP *ld, int option, const struct timeval *invalue)
+{
+   return(ldap_set_option(ld, option, invalue));
+}
 
 
 /* end of source */

@@ -81,6 +81,9 @@ int ovlc_ldap_opt_dump(ovlc * od);
 void ovlc_ldap_opt_dump_int(LDAP * ld, int opt, const char * name);
 void ovlc_ldap_opt_dump_str(LDAP * ld, int opt, const char * name);
 void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name);
+int ovlc_ldap_set_option_int(LDAP *ld, int option, const int  invalue);
+int ovlc_ldap_set_option_str(LDAP *ld, int option, const char * invalue);
+int ovlc_ldap_set_option_time(LDAP *ld, int option, const struct timeval *invalue);
 
 
 #endif /* Header_h */
