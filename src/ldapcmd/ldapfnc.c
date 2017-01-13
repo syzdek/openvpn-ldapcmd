@@ -219,7 +219,7 @@ void ovlc_ldap_opt_dump_int(LDAP * ld, int opt, const char * name)
    ldap_get_option(ld, opt, &val);
    printf("   %-35s %i\n", name, val);
    return;
-};
+}
 
 
 void ovlc_ldap_opt_dump_str(LDAP * ld, int opt, const char * name)
@@ -237,7 +237,7 @@ void ovlc_ldap_opt_dump_str(LDAP * ld, int opt, const char * name)
       printf("   %-35s N/A\n", name);
    };
    return;
-};
+}
 
 
 void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name)
@@ -255,7 +255,8 @@ void ovlc_ldap_opt_dump_tim(LDAP * ld, int opt, const char * name)
       printf("   %-35s N/A\n", name);
    };
    return;
-};
+}
+
 
 
 /* end of source */
