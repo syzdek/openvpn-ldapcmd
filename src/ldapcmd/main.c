@@ -31,6 +31,36 @@
  *
  *  @SYZDEK_BSD_LICENSE_END@
  */
+/*
+ *  Simple Build:
+ *     echo '#define GIT_PACKAGE_VERSION_BUILD "n/a"' > git-package-version.h
+ *     gcc -W -Wall -O2 -c common.c
+ *     gcc -W -Wall -O2 -c ldapfnc.c
+ *     gcc -W -Wall -O2 -c main.c
+ *     gcc -W -Wall -O2 -lldap -o openvpn-ldapcmd common.o ldapfnc.o main.o
+ *
+ *  Simple Clean:
+ *     rm -f *.o openvpn-ldapcmd git-package-version.h
+ *
+ *  GNU Libtool Build:
+ *     echo '#define GIT_PACKAGE_VERSION_BUILD "n/a"' > git-package-version.h
+ *     libtool --tag=CC --mode=compile gcc -W -Wall -g -O2 -c common.c
+ *     libtool --tag=CC --mode=compile gcc -W -Wall -g -O2 -c ldapfnc.c
+ *     libtool --tag=CC --mode=compile gcc -W -Wall -g -O2 -c main.c
+ *     libtool --tag=CC --mode=link    gcc -W -Wall -g -O2 -lldap \
+ *        -o openvpn-ldapcmd common.o ldapfnc.o main.o
+ *
+ *  GNU Libtool Install:
+ *     libtool --mode=install install -c openvpn-ldapcmd \
+ *        /usr/local/bin/openvpn-ldapcmd
+ *
+ *  GNU Libtool Clean:
+ *     libtool --mode=clean rm -f common.lo
+ *     libtool --mode=clean rm -f ldapfnc.lo
+ *     libtool --mode=clean rm -f main.lo
+ *     libtool --mode=clean rm -f openvpn-ldapcmd
+ *     libtool --mode=clean rm -f git-package-version.h
+ */
 #define __MAIN_C 1
 #undef __OVPNLDAPCMD_PMARK
 
