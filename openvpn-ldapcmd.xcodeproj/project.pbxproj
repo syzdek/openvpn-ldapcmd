@@ -117,6 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A08839BC1E30102600DD3348 /* genldif.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = genldif.sh; sourceTree = "<group>"; };
 		A0DD328B1E26EAE600A95CA7 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; fileEncoding = 4; indentWidth = 8; path = Makefile; sourceTree = "<group>"; tabWidth = 8; usesTabs = 1; };
 		A0DD328D1E26EAE600A95CA7 /* ldapoptions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldapoptions.c; sourceTree = "<group>"; };
 		A0DD32941E26EBEC00A95CA7 /* ldapoptions */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ldapoptions; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -301,6 +302,7 @@
 		A0DD33031E29893D00A95CA7 /* doc */ = {
 			isa = PBXGroup;
 			children = (
+				A08839BC1E30102600DD3348 /* genldif.sh */,
 				A0DD33041E29948200A95CA7 /* openvpn-ldapcmd.schema */,
 			);
 			path = doc;

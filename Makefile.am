@@ -72,6 +72,7 @@ doc_DATA				= AUTHORS \
 					  INSTALL \
 					  NEWS.md \
 					  README.md \
+					  doc/openvpn-ldapcmd.ldif \
 					  doc/openvpn-ldapcmd.schema
 doxygen_DATA				=
 include_HEADERS				=
@@ -102,6 +103,7 @@ EXTRA_DIST				= \
 					  ChangeLog.md \
 					  NEWS.md \
 					  README.md \
+					  doc/genldif.sh \
 					  doc/openvpn-ldapcmd.schema \
 					  src/scripts/openvpn-ldapcmd.profile \
 					  src/scripts/openvpn-ldapcmd-test.sh.in \
@@ -117,7 +119,8 @@ CLEANFILES				= \
 					  $(sbin_SCRIPTS) \
 					  @PACKAGE_TARNAME@-*.tar.* \
 					  @PACKAGE_TARNAME@-*.txz \
-					  @PACKAGE_TARNAME@-*.zip
+					  @PACKAGE_TARNAME@-*.zip \
+					  doc/openvpn-ldapcmd.ldif
 DISTCHECK_CONFIGURE_FLAGS		= --enable-strictwarnings \
 					  --enable-ldapoptions
 
@@ -162,8 +165,15 @@ include $(srcdir)/@bindletools_srcdir@/build-aux/makefile-version.am
 # custom targets
 .PHONY:
 
+
+doc/openvpn-ldapcmd.ldif: Makefile doc/genldif.sh doc/openvpn-ldapcmd.schema
+	@mkdir -p doc
+	$(top_srcdir)/doc/genldif.sh $(top_srcdir)/doc/openvpn-ldapcmd.schema $(@) openvpn-ldapcmd
+
+
 src/scripts/openvpn-ldapcmd-test.sh: Makefile src/scripts/openvpn-ldapcmd-test.sh.in
 	@$(do_subst_fn)
+
 
 # local targets
 install-exec-local:
