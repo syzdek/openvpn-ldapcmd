@@ -71,7 +71,8 @@ doc_DATA				= AUTHORS \
 					  ChangeLog.md \
 					  INSTALL \
 					  NEWS.md \
-					  README.md
+					  README.md \
+					  doc/openvpn-ldapcmd.schema
 doxygen_DATA				=
 include_HEADERS				=
 lib_LTLIBRARIES				=
@@ -101,6 +102,7 @@ EXTRA_DIST				= \
 					  ChangeLog.md \
 					  NEWS.md \
 					  README.md \
+					  doc/openvpn-ldapcmd.schema \
 					  src/scripts/openvpn-ldapcmd.profile \
 					  src/scripts/openvpn-ldapcmd-test.sh.in \
 					  src/utils/Makefile

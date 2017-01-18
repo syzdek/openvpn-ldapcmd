@@ -1,0 +1,232 @@
+#
+#   OpenVPN LDAP Command
+#   Copyright (C) 2017 David M. Syzdek <david@syzdek.net>.
+#
+#   @SYZDEK_BSD_LICENSE_START@
+#
+#   Redistribution and use in source and binary forms, with or without
+#   modification, are permitted provided that the following conditions are
+#   met:
+#
+#      * Redistributions of source code must retain the above copyright
+#        notice, this list of conditions and the following disclaimer.
+#      * Redistributions in binary form must reproduce the above copyright
+#        notice, this list of conditions and the following disclaimer in the
+#        documentation and/or other materials provided with the distribution.
+#      * Neither the name of David M. Syzdek nor the
+#        names of its contributors may be used to endorse or promote products
+#        derived from this software without specific prior written permission.
+#
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+#   IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+#   THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+#   PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL DAVID M. SYZDEK BE LIABLE FOR
+#   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#   DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+#   SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+#   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#   LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#   OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#   SUCH DAMAGE.
+#
+#   @SYZDEK_BSD_LICENSE_END@
+#
+#   OID Assignements for LDAP Schema
+#   +---------------------------------- iso
+#   | +-------------------------------- org
+#   | | +------------------------------ dod
+#   | | | +---------------------------- internet
+#   | | | | +-------------------------- private
+#   | | | | |    +--------------------- Alaska Communications Systems, Inc
+#   | | | | |    |   +----------------- Internet
+#   | | | | |    |   |   +------------- LDAP OIDs
+#   | | | | |    |   |   |    +-------- OpenVPN LDAP Schema
+#   | | | | |    |   |   |    |
+#   1.3.6.1.4.8838.800.389.1194.1 ----- openvpn-ldapcmd object classes
+#   1.3.6.1.4.8838.800.389.1194.1.1 --- openvpnAccount
+#   1.3.6.1.4.8838.800.389.1194.2 ----- openvpn-ldapcmd attribute types
+#   1.3.6.1.4.8838.800.389.1194.2.1 --- openvpnUserStatus
+#   1.3.6.1.4.8838.800.389.1194.2.2 --- openvpnProfile
+#   1.3.6.1.4.8838.800.389.1194.2.3 --- openvpnAclOrder
+#   1.3.6.1.4.8838.800.389.1194.2.4 --- openvpnAclAllow
+#   1.3.6.1.4.8838.800.389.1194.2.5 --- openvpnAclDeny
+#   1.3.6.1.4.8838.800.389.1194.2.6 --- openvpnRoute
+#   1.3.6.1.4.8838.800.389.1194.2.7 --- openvpnRouteIPv6
+#   1.3.6.1.4.8838.800.389.1194.2.8 --- openvpnRedirectGateway
+#   1.3.6.1.4.8838.800.389.1194.2.9 --- openvpnDHCPOption
+#   1.3.6.1.4.8838.800.389.1194.2.10 -- openvpnCompression
+#   1.3.6.1.4.8838.800.389.1194.2.11 -- openvpnPush
+#   1.3.6.1.4.8838.800.389.1194.2.12 -- openvpnPushReset
+#   1.3.6.1.4.8838.800.389.1194.2.13 -- ovpnRouteGateway
+#   1.3.6.1.4.8838.800.389.1194.2.14 -- ovpnRouteGatewayIPv6
+#   1.3.6.1.4.8838.800.389.1194.2.15 -- openvpnIfconfigPush
+#   1.3.6.1.4.8838.800.389.1194.2.16 -- openvpnIfconfigPushIPv6
+#   1.3.6.1.4.8838.800.389.1194.2.17 -- openvpnInactive
+#   1.3.6.1.4.8838.800.389.1194.2.18 -- openvpnPing
+#   1.3.6.1.4.8838.800.389.1194.2.19 -- openvpnPingExit
+#   1.3.6.1.4.8838.800.389.1194.2.20 -- openvpnPingRestart
+#   1.3.6.1.4.8838.800.389.1194.2.21 -- openvpnSetENV
+#
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.1
+   NAME ( 'openvpnUserStatus' 'ovpnUserStatus' )
+   DESC 'OpenVPN user account status'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+   SINGLE-VALUE )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.2
+   NAME ( 'openvpnProfile' 'ovpnProfile' )
+   DESC 'OpenVPN user account status'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+   SINGLE-VALUE )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.3
+   NAME ( 'openvpnAclOrder' 'ovpnAclOrder' )
+   DESC 'Order to process Allow/Deny ACL'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+   SINGLE-VALUE )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.4
+   NAME ( 'openvpnAclAllow' 'ovpnAclAllow' )
+   DESC 'IP address/networks allowed to access OpenVPN'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.5
+   NAME ( 'openvpnAclDeny' 'ovpnAclDeny' )
+   DESC 'IP address/networks denied to access OpenVPN'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.6
+   NAME ( 'openvpnRoute' 'ovpnRoute' )
+   DESC 'push IPv4 route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.7
+   NAME ( 'openvpnRouteIPv6' 'ovpnRouteIPv6' )
+   DESC 'push IPv6 route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.8
+   NAME ( 'openvpnRedirectGateway' 'ovpnRedirectGateway' )
+   DESC 'push redirect-gateway to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.9
+   NAME ( 'openvpnDHCPOption' 'ovpnDHCPOption' )
+   DESC 'push dhcp-option to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.10
+   NAME ( 'openvpnCompression' 'ovpnCompression' )
+   DESC 'push compression or comp-lzo to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.11
+   NAME ( 'openvpnPush' 'ovpnPush' )
+   DESC 'push arbitrary parameters to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.12
+   NAME ( 'openvpnPushReset' 'ovpnPushReset' )
+   DESC 'reset all push parameters to OpenVPN client'
+   EQUALITY booleanMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.13
+   NAME ( 'openvpnRouteGateway' 'ovpnRouteGateway' )
+   DESC 'push default gateway for use with route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.14
+   NAME ( 'openvpnRouteGatewayIPv6' 'ovpnRouteGatewayIPv6' )
+   DESC 'push default gateway for use with route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.15
+   NAME ( 'openvpnIfconfigPush' 'ovpnIfconfigPush' )
+   DESC 'push default gateway for use with route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.16
+   NAME ( 'openvpnIfconfigPushIPv6' 'ovpnIfconfigPushIPv6' )
+   DESC 'push default gateway for use with route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.17
+   NAME ( 'openvpnInactive' 'ovpnInactive' )
+   DESC 'push inactive N [bytes] to OpenVPN client'
+   EQUALITY numericStringMatch
+   ORDERING numericStringOrderingMatch
+   SUBSTR numericStringSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.36 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.18
+   NAME ( 'openvpnPing' 'ovpnPing' )
+   DESC 'push ping N to OpenVPN client'
+   EQUALITY integerMatch
+   ORDERING integerOrderingMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.19
+   NAME ( 'openvpnPingExit' 'ovpnPingExit' )
+   DESC 'push ping-exit N to OpenVPN client'
+   EQUALITY integerMatch
+   ORDERING integerOrderingMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.20
+   NAME ( 'openvpnPingRestart' 'ovpnPingRestart' )
+   DESC 'push ping-restart N to OpenVPN client'
+   EQUALITY integerMatch
+   ORDERING integerOrderingMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+attributeType ( 1.3.6.1.4.8838.800.389.1194.2.21
+   NAME ( 'openvpnSetENV' 'ovpnIfconfigSetENV' )
+   DESC 'push default gateway for use with route to OpenVPN client'
+   EQUALITY caseIgnoreMatch
+   SUBSTR caseIgnoreSubstringsMatch
+   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+objectclass ( 1.3.6.1.4.8838.800.389.1194.1.1
+   NAME 'openvpnAccount'
+   DESC 'Abstraction of an account with OpenVPN attributes'
+   SUP top AUXILIARY
+   MAY ( openvpnUserStatus $ openvpnProfile $ openvpnAclOrder $
+         openvpnAclAllow $ openvpnAclDeny $ openvpnRoute $
+         openvpnRouteIPv6 $ openvpnRedirectGateway $ openvpnDHCPOption $
+         openvpnCompression $ openvpnPush $ openvpnPushReset $
+         openvpnRouteGateway $ ovpnRouteGatewayIPv6 $ openvpnIfconfigPush $
+         openvpnIfconfigPushIPv6 $ ovpnInactive $ openvpnPing $
+         openvpnPingExit $ openvpnPingRestart $ ovpnIfconfigSetENV ) )
+
+# end of schema

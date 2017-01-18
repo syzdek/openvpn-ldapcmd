@@ -146,6 +146,7 @@
 		A0DD32F31E2714D400A95CA7 /* liblber.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = liblber.tbd; path = usr/lib/liblber.tbd; sourceTree = SDKROOT; };
 		A0DD32FF1E297C5B00A95CA7 /* ldapfnc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldapfnc.c; sourceTree = "<group>"; };
 		A0DD33001E297C5B00A95CA7 /* ldapfnc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldapfnc.h; sourceTree = "<group>"; };
+		A0DD33041E29948200A95CA7 /* openvpn-ldapcmd.schema */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = "openvpn-ldapcmd.schema"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +182,7 @@
 				A0DD32A81E26F0C600A95CA7 /* configure.ac */,
 				A0DD32A31E26EE8D00A95CA7 /* COPYING */,
 				A0DD32B41E26F0DB00A95CA7 /* contrib */,
+				A0DD33031E29893D00A95CA7 /* doc */,
 				A0DD32B01E26F0D600A95CA7 /* include */,
 				A0DD32A91E26F0C600A95CA7 /* Makefile.am */,
 				A0DD32B21E26F0D600A95CA7 /* m4 */,
@@ -294,6 +296,14 @@
 				A0DD328D1E26EAE600A95CA7 /* ldapoptions.c */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		A0DD33031E29893D00A95CA7 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				A0DD33041E29948200A95CA7 /* openvpn-ldapcmd.schema */,
+			);
+			path = doc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -708,6 +718,7 @@
 				A0DD329A1E26EBEC00A95CA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0DD32D41E270B3600A95CA7 /* Build configuration list for PBXNativeTarget "openvpn-ldapcmd" */ = {
 			isa = XCConfigurationList;
@@ -716,6 +727,7 @@
 				A0DD32D61E270B3600A95CA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0DD32E31E27111800A95CA7 /* Build configuration list for PBXAggregateTarget "openvpn-ldapcmd: Git Version" */ = {
 			isa = XCConfigurationList;
@@ -724,6 +736,7 @@
 				A0DD32E51E27111800A95CA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0DD32F81E27150900A95CA7 /* Build configuration list for PBXAggregateTarget "openvpn-ldapcmd: all" */ = {
 			isa = XCConfigurationList;
@@ -732,6 +745,7 @@
 				A0DD32FA1E27150900A95CA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
