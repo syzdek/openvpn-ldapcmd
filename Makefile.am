@@ -77,7 +77,7 @@ doc_DATA				= AUTHORS \
 doxygen_DATA				=
 include_HEADERS				=
 lib_LTLIBRARIES				=
-libexec_SCRIPT				= src/scripts/openvpn-ldapcmd.profile
+libexec_SCRIPTS				=
 man_MANS				=
 info_TEXINFOS				=
 noinst_DATA				=
@@ -88,9 +88,9 @@ noinst_PROGRAMS				=
 bin_PROGRAMS				=
 bin_SCRIPTS				=
 pkgconf_DATA				=
-pkgdata_DATA				=
+pkgdata_DATA				= src/openvpn-ldapcmd.profile
 sbin_PROGRAMS				= src/openvpn-ldapcmd
-sbin_SCRIPTS				= src/scripts/openvpn-ldapcmd-test.sh
+sbin_SCRIPTS				= src/debug-openvpn-ldapcmd
 
 
 # lists
@@ -105,8 +105,8 @@ EXTRA_DIST				= \
 					  README.md \
 					  doc/genldif.sh \
 					  doc/openvpn-ldapcmd.schema \
-					  src/scripts/openvpn-ldapcmd.profile \
-					  src/scripts/openvpn-ldapcmd-test.sh.in \
+					  src/openvpn-ldapcmd.profile.in \
+					  src/debug-openvpn-ldapcmd.in \
 					  src/utils/Makefile
 CLEANFILES				= \
 					  $(builddir)/a.out   $(srcdir)/a.out \
@@ -117,10 +117,12 @@ CLEANFILES				= \
 					  $(pkgdata_DATA) \
 					  $(bin_SCRIPTS) \
 					  $(sbin_SCRIPTS) \
+					  $(libexec_SCRIPTS) \
 					  @PACKAGE_TARNAME@-*.tar.* \
 					  @PACKAGE_TARNAME@-*.txz \
 					  @PACKAGE_TARNAME@-*.zip \
-					  doc/openvpn-ldapcmd.ldif
+					  doc/openvpn-ldapcmd.ldif \
+					  src/openvpn-ldapcmd.profile
 DISTCHECK_CONFIGURE_FLAGS		= --enable-strictwarnings \
 					  --enable-ldapoptions
 
@@ -173,7 +175,10 @@ doc/openvpn-ldapcmd.ldif: Makefile doc/genldif.sh doc/openvpn-ldapcmd.schema
 	$(top_srcdir)/doc/genldif.sh $(top_srcdir)/doc/openvpn-ldapcmd.schema $(@) openvpn-ldapcmd
 
 
-src/scripts/openvpn-ldapcmd-test.sh: Makefile src/scripts/openvpn-ldapcmd-test.sh.in
+src/openvpn-ldapcmd.profile: Makefile src/openvpn-ldapcmd.profile.in
+	@$(do_subst_dt)
+
+src/debug-openvpn-ldapcmd: Makefile src/debug-openvpn-ldapcmd.in
 	@$(do_subst_fn)
 
 

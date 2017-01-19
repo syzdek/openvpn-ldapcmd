@@ -140,8 +140,8 @@
 		A0DD32B31E26F0D600A95CA7 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A0DD32B51E26F0F400A95CA7 /* bindletools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = bindletools.xcodeproj; path = bindletools/bindletools.xcodeproj; sourceTree = "<group>"; };
 		A0DD32C81E26F5FA00A95CA7 /* NEWS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = NEWS.md; sourceTree = "<group>"; };
-		A0DD32CA1E26FE2500A95CA7 /* openvpn-ldapcmd-test.sh.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "openvpn-ldapcmd-test.sh.in"; sourceTree = "<group>"; };
-		A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = "openvpn-ldapcmd.profile"; sourceTree = "<group>"; };
+		A0DD32CA1E26FE2500A95CA7 /* debug-openvpn-ldapcmd.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "debug-openvpn-ldapcmd.in"; sourceTree = "<group>"; };
+		A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile.in */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = "openvpn-ldapcmd.profile.in"; sourceTree = "<group>"; };
 		A0DD32D01E270B3600A95CA7 /* openvpn-ldapcmd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "openvpn-ldapcmd"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0DD32DA1E270DBC00A95CA7 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		A0DD32DE1E270E1400A95CA7 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
@@ -210,8 +210,9 @@
 		A0DD328A1E26EAE600A95CA7 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A0DD32CA1E26FE2500A95CA7 /* debug-openvpn-ldapcmd.in */,
+				A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile.in */,
 				A0DD32D71E270B7500A95CA7 /* ldapcmd */,
-				A0DD32D81E270B8400A95CA7 /* scripts */,
 				A0DD32D91E270B9500A95CA7 /* utils */,
 			);
 			path = src;
@@ -284,15 +285,6 @@
 				A0DD32DA1E270DBC00A95CA7 /* main.c */,
 			);
 			path = ldapcmd;
-			sourceTree = "<group>";
-		};
-		A0DD32D81E270B8400A95CA7 /* scripts */ = {
-			isa = PBXGroup;
-			children = (
-				A0DD32CA1E26FE2500A95CA7 /* openvpn-ldapcmd-test.sh.in */,
-				A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile */,
-			);
-			path = scripts;
 			sourceTree = "<group>";
 		};
 		A0DD32D91E270B9500A95CA7 /* utils */ = {

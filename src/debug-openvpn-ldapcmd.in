@@ -33,9 +33,9 @@
 #   @SYZDEK_BSD_LICENSE_END@
 #
 
-if test -f @libexecdir@/openvpn-ldapcmd.profile;then
-   . @libexecdir@/openvpn-ldapcmd.profile
-elif test -f @builddir@/src/scripts/openvpn-ldapcmd.profile;then
+if test -f @pkgdatadir@/openvpn-ldapcmd.profile;then
+   . @pkgdatadir@/openvpn-ldapcmd.profile
+elif test -f @builddir@/src/openvpn-ldapcmd.profile;then
    . @builddir@/src/openvpn-ldapcmd.profile
 fi
 
