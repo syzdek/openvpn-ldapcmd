@@ -96,6 +96,14 @@
 #pragma mark - Datatypes
 #endif
 
+struct openvpn_code
+{
+   const char     * c_name;
+   int              c_value;
+};
+typedef struct openvpn_code ovlc_code;
+
+
 enum openvpn_type
 {
    Unknown              = -1,
@@ -111,6 +119,7 @@ struct openvpn_ldapcmd
 {
    char           * cmd_arg;
    char           * ldap_basedn;
+   char           * ldap_binddn;
    char           * ldap_filter;
    char           * ldap_uri;
    char           * ovpn_untrusted_ip;
@@ -131,11 +140,12 @@ struct openvpn_ldapcmd
    int              ldap_tls_cert;
    int              ldap_version;
    int              ovpn_verb;
-   int              syslog_facility;
-   int              syslog_option;
+   int              verbose;
    int              continue_on_error;
    ovlc_type        script_type;
    LDAP           * ld;
+   BerValue       * servercred;
+   BerValue         ldap_cred;
 };
 typedef struct openvpn_ldapcmd ovlc;
 

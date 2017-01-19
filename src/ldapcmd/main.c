@@ -75,6 +75,7 @@
 
 #include "common.h"
 #include "ldapfnc.h"
+#include "log.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -121,6 +122,9 @@ int main(int argc, char * argv[])
    int           rc;
    ovlc        * od;
 
+   // initialize syslog
+   openlog(PROGRAM_NAME, LOG_PID, LOG_DAEMON);
+
    // initialize memory
    if ((rc = ovlc_initialize(&od, argv[0])) != 0)
       return(1);
@@ -133,15 +137,11 @@ int main(int argc, char * argv[])
       return(rc);
    };
 
-   // initialize syslog
-   openlog(PROGRAM_NAME, od->syslog_option, od->syslog_facility);
-
    // initialize LDAP
    if ((rc = ovlc_ldap_initialize(od)) != 0)
    {
       ovlc_destroy(od);
-      rc = (rc == -1) ? 0 : rc;
-      return(rc);
+      return(1);
    };
 
    ovlc_ldap_opt_dump(od);

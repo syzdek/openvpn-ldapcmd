@@ -31,8 +31,8 @@
  *
  *  @SYZDEK_BSD_LICENSE_END@
  */
-#ifndef __LDAPFNC_H
-#define __LDAPFNC_H 1
+#define __LOG_C 1
+#include "log.h"
 
 
 ///////////////
@@ -44,26 +44,18 @@
 #pragma mark - Headers
 #endif
 
-#include "common.h"
-
-
-///////////////////
-//               //
-//  Definitions  //
-//               //
-///////////////////
-#ifdef __OVPNLDAPCMD_PMARK
-#pragma mark - Definitions
-#endif
+#include <syslog.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 
 /////////////////
 //             //
-//  Datatypes  //
+//  Variables  //
 //             //
 /////////////////
-#ifdef __OVPNLDAPCMD_PMARK
-#pragma mark - Datatypes
+#ifdef __RACKGNOME_PMARK
+#pragma mark - Variables
 #endif
 
 
@@ -72,19 +64,54 @@
 //  Prototypes  //
 //              //
 //////////////////
-#ifdef __OVPNLDAPCMD_PMARK
+#ifdef __RACKGNOME_PMARK
 #pragma mark - Prototypes
 #endif
 
-int ovlc_ldap_initialize(ovlc * od);
-int ovlc_ldap_opt_dump(ovlc * od);
-void ovlc_ldap_opt_dump_int(ovlc * od, int opt, const char * name);
-void ovlc_ldap_opt_dump_str(ovlc * od, int opt, const char * name);
-void ovlc_ldap_opt_dump_tim(ovlc * od, int opt, const char * name);
-int ovlc_ldap_search_user(ovlc * od);
-int ovlc_ldap_set_option_int(LDAP *ld, int option, const int  invalue);
-int ovlc_ldap_set_option_str(LDAP *ld, int option, const char * invalue);
-int ovlc_ldap_set_option_time(LDAP *ld, int option, const struct timeval *invalue);
+
+/////////////////
+//             //
+//  Functions  //
+//             //
+/////////////////
+#ifdef __RACKGNOME_PMARK
+#pragma mark - Functions
+#endif
+
+void ovlc_log(ovlc * od, int priority, const char *format, ...)
+{
+   int        verbose;
+   va_list    ap;
+   FILE     * stream;
+
+   verbose = (od != NULL) ? od->verbose : 2;
+   stream  = NULL;
+
+   if (verbose  != 0)
+   {
+      if (priority <= LOG_WARNING)
+         stream = stderr;
+      else if (priority <= LOG_NOTICE)
+         stream = stdout;
+      else if (verbose > 1)
+         stream = stdout;
+   };
+
+   if ((stream))
+   {
+      fprintf(stream, "%s: ", PROGRAM_NAME);
+      va_start(ap, format);
+      vfprintf(stream, format, ap);
+      va_end(ap);
+      fprintf(stream, "\n");
+   };
+
+   va_start(ap, format);
+   vsyslog(priority, format, ap);
+   va_end(ap);
+
+   return;
+}
 
 
-#endif /* Header_h */
+/* end of source */

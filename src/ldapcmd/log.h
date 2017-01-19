@@ -31,8 +31,8 @@
  *
  *  @SYZDEK_BSD_LICENSE_END@
  */
-#ifndef __LDAPFNC_H
-#define __LDAPFNC_H 1
+#ifndef __LOG_H
+#define __LOG_H 1
 
 
 ///////////////
@@ -76,15 +76,7 @@
 #pragma mark - Prototypes
 #endif
 
-int ovlc_ldap_initialize(ovlc * od);
-int ovlc_ldap_opt_dump(ovlc * od);
-void ovlc_ldap_opt_dump_int(ovlc * od, int opt, const char * name);
-void ovlc_ldap_opt_dump_str(ovlc * od, int opt, const char * name);
-void ovlc_ldap_opt_dump_tim(ovlc * od, int opt, const char * name);
-int ovlc_ldap_search_user(ovlc * od);
-int ovlc_ldap_set_option_int(LDAP *ld, int option, const int  invalue);
-int ovlc_ldap_set_option_str(LDAP *ld, int option, const char * invalue);
-int ovlc_ldap_set_option_time(LDAP *ld, int option, const struct timeval *invalue);
+void ovlc_log(ovlc * od, int priority, const char *format, ...);
 
 
 #endif /* Header_h */

@@ -54,6 +54,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "log.h"
+
 
 /////////////////
 //             //
@@ -65,6 +67,31 @@
 #endif
 
 extern char **environ;
+
+ovlc_code syslog_facilities[] =
+{
+   { "kern",      LOG_KERN },
+   { "user",      LOG_USER },
+   { "mail",      LOG_MAIL },
+   { "daemon",    LOG_DAEMON },
+   { "auth",      LOG_AUTH },
+   { "syslog",    LOG_SYSLOG },
+   { "lpr",       LOG_LPR },
+   { "news",      LOG_NEWS },
+   { "uucp",      LOG_UUCP },
+   { "cron",      LOG_CRON },
+   { "authpriv",  LOG_AUTHPRIV },
+   { "ftp",       LOG_FTP },
+   { "local0",    LOG_LOCAL0 },
+   { "local1",    LOG_LOCAL1 },
+   { "local2",    LOG_LOCAL2 },
+   { "local3",    LOG_LOCAL3 },
+   { "local4",    LOG_LOCAL4 },
+   { "local5",    LOG_LOCAL5 },
+   { "local6",    LOG_LOCAL6 },
+   { "local7",    LOG_LOCAL7 },
+   { NULL, -1 }
+};
 
 
 //////////////////
@@ -149,8 +176,10 @@ int ovlc_parseopt(ovlc * od, int argc, char ** argv)
 {
    int           rc;
    int           c;
+   int           pos;
    int           opt_index;
    char        * endptr;
+   const ovlc_code * code;
    struct stat   sb;
 
    static char          short_opt[] = "a:b:cd:F:f:H:hl:P:p:Q:qs:vVxZ";
@@ -221,52 +250,17 @@ int ovlc_parseopt(ovlc * od, int argc, char ** argv)
 
 
          case 'F':
-         if (!(strcasecmp(optarg, "kern")))
-            od->syslog_facility = LOG_KERN;
-         else if (!(strcasecmp(optarg, "user")))
-            od->syslog_facility = LOG_USER;
-         else if (!(strcasecmp(optarg, "mail")))
-            od->syslog_facility = LOG_MAIL;
-         else if (!(strcasecmp(optarg, "daemon")))
-            od->syslog_facility = LOG_DAEMON;
-         else if (!(strcasecmp(optarg, "auth")))
-            od->syslog_facility = LOG_AUTH;
-         else if (!(strcasecmp(optarg, "syslog")))
-            od->syslog_facility = LOG_SYSLOG;
-         else if (!(strcasecmp(optarg, "lpr")))
-            od->syslog_facility = LOG_LPR;
-         else if (!(strcasecmp(optarg, "news")))
-            od->syslog_facility = LOG_NEWS;
-         else if (!(strcasecmp(optarg, "uucp")))
-            od->syslog_facility = LOG_UUCP;
-         else if (!(strcasecmp(optarg, "cron")))
-            od->syslog_facility = LOG_CRON;
-         else if (!(strcasecmp(optarg, "authpriv")))
-            od->syslog_facility = LOG_AUTHPRIV;
-         else if (!(strcasecmp(optarg, "ftp")))
-            od->syslog_facility = LOG_FTP;
-         else if (!(strcasecmp(optarg, "local0")))
-            od->syslog_facility = LOG_LOCAL0;
-         else if (!(strcasecmp(optarg, "local1")))
-            od->syslog_facility = LOG_LOCAL1;
-         else if (!(strcasecmp(optarg, "local2")))
-            od->syslog_facility = LOG_LOCAL2;
-         else if (!(strcasecmp(optarg, "local3")))
-            od->syslog_facility = LOG_LOCAL3;
-         else if (!(strcasecmp(optarg, "local4")))
-            od->syslog_facility = LOG_LOCAL4;
-         else if (!(strcasecmp(optarg, "local5")))
-            od->syslog_facility = LOG_LOCAL5;
-         else if (!(strcasecmp(optarg, "local6")))
-            od->syslog_facility = LOG_LOCAL6;
-         else if (!(strcasecmp(optarg, "local7")))
-            od->syslog_facility = LOG_LOCAL7;
-         else
+         for (pos = 0, code = NULL; ((syslog_facilities[pos].c_name != NULL) && (code != NULL)); pos++)
+            if (!(strcasecmp(optarg, (syslog_facilities[pos].c_name))))
+               code = &syslog_facilities[pos];
+         if (!(code))
          {
             fprintf(stderr, "%s: invalid value for `-%c'\n", od->prog_name, c);
             fprintf(stderr, "Try `%s --help' for more information.\n", od->prog_name);
             return(1);
          };
+         closelog();
+         openlog(PROGRAM_NAME, LOG_PID, code->c_value);
          break;
 
 
@@ -384,7 +378,7 @@ int ovlc_parseopt(ovlc * od, int argc, char ** argv)
 
 
          case 'v':
-         od->syslog_option |= LOG_PERROR;
+         od->verbose++;
          break;
 
 
@@ -437,7 +431,7 @@ int ovlc_initialize(ovlc ** odp, const char * arg1)
    // allocate configuration memory
    if ((od = malloc(sizeof(ovlc))) == NULL)
    {
-      syslog(LOG_ERR, "malloc(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "malloc(): %s", strerror(errno));
       return(-1);
    };
    bzero(od, sizeof(ovlc));
@@ -450,7 +444,7 @@ int ovlc_initialize(ovlc ** odp, const char * arg1)
    str = (str != NULL) ? str : PROGRAM_NAME;
    if ((od->prog_name = strdup(str)) == NULL)
    {
-      syslog(LOG_ERR, "strdup(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "strdup(): %s", strerror(errno));
       ovlc_destroy(od);
       return(1);
    };
@@ -460,35 +454,35 @@ int ovlc_initialize(ovlc ** odp, const char * arg1)
    str = ((str = getenv("untrusted_ip")) != NULL) ? str : "";
    if ((od->ovpn_untrusted_ip = strdup(str)) == NULL)
    {
-      syslog(LOG_ERR, "strdup(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "strdup(): %s", strerror(errno));
       ovlc_destroy(od);
       return(1);
    };
    str = ((str = getenv("trusted_ip")) != NULL) ? str : "";
    if ((od->ovpn_trusted_ip = strdup(str)) == NULL)
    {
-      syslog(LOG_ERR, "strdup(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "strdup(): %s", strerror(errno));
       ovlc_destroy(od);
       return(1);
    };
    str = ((str = getenv("pool_remote_ip")) != NULL) ? str : "";
    if ((od->ovpn_pool_remote_ip = strdup(str)) == NULL)
    {
-      syslog(LOG_ERR, "strdup(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "strdup(): %s", strerror(errno));
       ovlc_destroy(od);
       return(1);
    };
    str = ((str = getenv("pool_remote_ip6")) != NULL) ? str : "";
    if ((od->ovpn_pool_remote_ip6 = strdup(str)) == NULL)
    {
-      syslog(LOG_ERR, "strdup(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "strdup(): %s", strerror(errno));
       ovlc_destroy(od);
       return(1);
    };
    str = ((str = getenv("common_name")) != NULL) ? str : "";
    if ((od->ovpn_common_name = strdup(str)) == NULL)
    {
-      syslog(LOG_ERR, "strdup(): %s", strerror(errno));
+      ovlc_log(od, LOG_ERR, "strdup(): %s", strerror(errno));
       ovlc_destroy(od);
       return(1);
    };
@@ -520,8 +514,6 @@ int ovlc_initialize(ovlc ** odp, const char * arg1)
    od->ldap_scope       = LDAP_SCOPE_DEFAULT;
    od->ldap_tls_cert    = 0;
    od->ldap_version     = -1;
-   od->syslog_facility  = LOG_DAEMON;
-   od->syslog_option    = LOG_PID;
 
 
    *odp = od;
