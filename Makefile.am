@@ -105,9 +105,9 @@ EXTRA_DIST				= \
 					  README.md \
 					  doc/genldif.sh \
 					  doc/openvpn-ldapcmd.schema \
+					  src/Makefile \
 					  src/openvpn-ldapcmd.profile.in \
-					  src/debug-openvpn-ldapcmd.in \
-					  src/utils/Makefile
+					  src/debug-openvpn-ldapcmd.in
 CLEANFILES				= \
 					  $(builddir)/a.out   $(srcdir)/a.out \
 					  $(builddir)/*/a.out $(srcdir)/*/a.out \
@@ -141,7 +141,7 @@ src_ldapoptions_DEPENDENCIES		=
 src_ldapoptions_SOURCES			= \
 					  $(include_HEADERS) \
 					  $(noinst_HEADERS) \
-					  src/utils/ldapoptions.c
+					  src/ldapoptions.c
 
 
 # macros for src/openvpn-ldapcmd
@@ -149,13 +149,13 @@ src_openvpn_ldapcmd_DEPENDENCIES	=
 src_openvpn_ldapcmd_SOURCES		= \
 					  $(include_HEADERS) \
 					  $(noinst_HEADERS) \
-					  src/ldapcmd/common.c \
-					  src/ldapcmd/common.h \
-					  src/ldapcmd/ldapfnc.c \
-					  src/ldapcmd/ldapfnc.h \
-					  src/ldapcmd/log.c \
-					  src/ldapcmd/log.h \
-					  src/ldapcmd/main.c
+					  src/common.c \
+					  src/common.h \
+					  src/ldapfnc.c \
+					  src/ldapfnc.h \
+					  src/log.c \
+					  src/log.h \
+					  src/openvpn-ldapcmd.c
 
 
 # Makefile includes

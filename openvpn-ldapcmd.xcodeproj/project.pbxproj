@@ -35,7 +35,7 @@
 /* Begin PBXBuildFile section */
 		A08839C01E30175A00DD3348 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = A08839BD1E3016FA00DD3348 /* log.c */; };
 		A0DD32A21E26ECFE00A95CA7 /* ldapoptions.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD328D1E26EAE600A95CA7 /* ldapoptions.c */; };
-		A0DD32DC1E270DD100A95CA7 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32DA1E270DBC00A95CA7 /* main.c */; };
+		A0DD32DC1E270DD100A95CA7 /* openvpn-ldapcmd.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32DA1E270DBC00A95CA7 /* openvpn-ldapcmd.c */; };
 		A0DD32E11E27101F00A95CA7 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = A0DD32DE1E270E1400A95CA7 /* common.c */; };
 		A0DD32F21E2714CA00A95CA7 /* libldap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F11E2714CA00A95CA7 /* libldap.tbd */; };
 		A0DD32F41E2714D400A95CA7 /* liblber.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DD32F31E2714D400A95CA7 /* liblber.tbd */; };
@@ -143,7 +143,7 @@
 		A0DD32CA1E26FE2500A95CA7 /* debug-openvpn-ldapcmd.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "debug-openvpn-ldapcmd.in"; sourceTree = "<group>"; };
 		A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile.in */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = "openvpn-ldapcmd.profile.in"; sourceTree = "<group>"; };
 		A0DD32D01E270B3600A95CA7 /* openvpn-ldapcmd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "openvpn-ldapcmd"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0DD32DA1E270DBC00A95CA7 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A0DD32DA1E270DBC00A95CA7 /* openvpn-ldapcmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "openvpn-ldapcmd.c"; sourceTree = "<group>"; };
 		A0DD32DE1E270E1400A95CA7 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
 		A0DD32DF1E270E1400A95CA7 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		A0DD32F11E2714CA00A95CA7 /* libldap.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libldap.tbd; path = usr/lib/libldap.tbd; sourceTree = SDKROOT; };
@@ -192,6 +192,7 @@
 				A0DD32B21E26F0D600A95CA7 /* m4 */,
 				A0DD32C81E26F5FA00A95CA7 /* NEWS.md */,
 				A0DD32AB1E26F0C600A95CA7 /* README.md */,
+				A0DD32D91E270B9500A95CA7 /* utils */,
 				A0DD328A1E26EAE600A95CA7 /* src */,
 				A0DD32A11E26ECF000A95CA7 /* Frameworks */,
 				A0DD32831E26EAD500A95CA7 /* Products */,
@@ -210,10 +211,17 @@
 		A0DD328A1E26EAE600A95CA7 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A0DD328B1E26EAE600A95CA7 /* Makefile */,
+				A0DD328D1E26EAE600A95CA7 /* ldapoptions.c */,
+				A0DD32DE1E270E1400A95CA7 /* common.c */,
+				A0DD32DF1E270E1400A95CA7 /* common.h */,
+				A0DD32FF1E297C5B00A95CA7 /* ldapfnc.c */,
+				A0DD33001E297C5B00A95CA7 /* ldapfnc.h */,
+				A08839BD1E3016FA00DD3348 /* log.c */,
+				A08839BE1E3016FA00DD3348 /* log.h */,
+				A0DD32DA1E270DBC00A95CA7 /* openvpn-ldapcmd.c */,
 				A0DD32CA1E26FE2500A95CA7 /* debug-openvpn-ldapcmd.in */,
 				A0DD32CB1E26FE2500A95CA7 /* openvpn-ldapcmd.profile.in */,
-				A0DD32D71E270B7500A95CA7 /* ldapcmd */,
-				A0DD32D91E270B9500A95CA7 /* utils */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -273,27 +281,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A0DD32D71E270B7500A95CA7 /* ldapcmd */ = {
-			isa = PBXGroup;
-			children = (
-				A0DD32DE1E270E1400A95CA7 /* common.c */,
-				A0DD32DF1E270E1400A95CA7 /* common.h */,
-				A0DD32FF1E297C5B00A95CA7 /* ldapfnc.c */,
-				A0DD33001E297C5B00A95CA7 /* ldapfnc.h */,
-				A08839BD1E3016FA00DD3348 /* log.c */,
-				A08839BE1E3016FA00DD3348 /* log.h */,
-				A0DD32DA1E270DBC00A95CA7 /* main.c */,
-			);
-			path = ldapcmd;
-			sourceTree = "<group>";
-		};
 		A0DD32D91E270B9500A95CA7 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				A0DD328B1E26EAE600A95CA7 /* Makefile */,
-				A0DD328D1E26EAE600A95CA7 /* ldapoptions.c */,
 			);
-			path = utils;
+			name = utils;
+			path = src/utils;
 			sourceTree = "<group>";
 		};
 		A0DD33031E29893D00A95CA7 /* doc */ = {
@@ -453,7 +446,7 @@
 			files = (
 				A08839C01E30175A00DD3348 /* log.c in Sources */,
 				A0DD32E11E27101F00A95CA7 /* common.c in Sources */,
-				A0DD32DC1E270DD100A95CA7 /* main.c in Sources */,
+				A0DD32DC1E270DD100A95CA7 /* openvpn-ldapcmd.c in Sources */,
 				A0DD33021E297E7800A95CA7 /* ldapfnc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
