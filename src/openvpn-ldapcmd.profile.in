@@ -42,9 +42,33 @@ OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} trusted_ip"
 OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} untrusted_ip"
 OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} ifconfig_pool_remote_ip"
 OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} ifconfig_pool_remote_ip6"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} script_context"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} script_type"
 OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} tmp_dir"
 OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} openvpn_ldapcmd_tmp_template"
 OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} openvpn_ldapcmd_ldap_filter"
+
+unset OPENVPN_LDAPCMD_VAR_LIST_INTERNAL
+OPENVPN_LDAPCMD_VAR_LIST_INTERNAL="${OPENVPN_LDAPCMD_VAR_LIST_INTERNAL} openvpn_ldapcmd_tmp_file"
+OPENVPN_LDAPCMD_VAR_LIST_INTERNAL="${OPENVPN_LDAPCMD_VAR_LIST_INTERNAL} password"
+OPENVPN_LDAPCMD_VAR_LIST_INTERNAL="${OPENVPN_LDAPCMD_VAR_LIST_INTERNAL} OPENVPN_LDAPCMD_SETUP"
+
+unset OPENVPN_LDAPCMD_FUNC_LIST
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_cleanup"
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_client_connect"
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_client_disconnect"
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_gen_temp_file"
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_setup"
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_user_pass_verify"
+OPENVPN_LDAPCMD_FUNC_LIST="${OPENVPN_LDAPCMD_FUNC_LIST} openvpn_ldapcmd_version"
+
+
+openvpn_ldapcmd_cleanup()
+{
+   test ! -z "${openvpn_ldapcmd_tmp_file}" \
+      && rm -f "${openvpn_ldapcmd_tmp_file}"
+   unset password
+}
 
 
 openvpn_ldapcmd_client_connect()
@@ -78,13 +102,6 @@ openvpn_ldapcmd_client_disconnect()
    echo ""
 
    return $RC
-}
-
-
-openvpn_ldapcmd_cleanup()
-{
-   test ! -z "${openvpn_ldapcmd_tmp_file}" \
-      && rm -f "${openvpn_ldapcmd_tmp_file}"
 }
 
 
@@ -158,6 +175,31 @@ openvpn_ldapcmd_setup()
 
    OPENVPN_LDAPCMD_SETUP=yes
    export OPENVPN_LDAPCMD_SETUP
+}
+
+
+openvpn_ldapcmdunload()
+{
+   openvpn_ldapcmd_cleanup
+   VARS=""
+   VARS="${VARS} ${OPENVPN_LDAPCMD_VAR_LIST}"
+   VARS="${VARS} ${OPENVPN_LDAPCMD_VAR_LIST_INTERNAL}"
+   VARS="${VARS} ${OPENVPN_LDAPCMD_FUNC_LIST}"
+   VARS="${VARS} OPENVPN_LDAPCMD_VAR_LIST"
+   VARS="${VARS} OPENVPN_LDAPCMD_VAR_LIST_INTERNAL"
+   VARS="${VARS} OPENVPN_LDAPCMD_FUNC_LIST"
+   for VAR in ${VARS};do
+      eval "unset $VAR"
+   done
+   unset VAR
+   unset VARS
+   unset openvpn_ldapcmdunload
+   unset openvpn_ldapcmd_unload
+}
+
+openvpn_ldapcmd_unload()
+{
+   openvpn_ldapcmdunload
 }
 
 
