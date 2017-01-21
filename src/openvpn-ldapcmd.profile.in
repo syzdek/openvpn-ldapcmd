@@ -33,36 +33,162 @@
 #   @SYZDEK_BSD_LICENSE_END@
 #
 
+
+unset OPENVPN_LDAPCMD_VAR_LIST
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} username"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} common_name"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} config"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} trusted_ip"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} untrusted_ip"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} ifconfig_pool_remote_ip"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} ifconfig_pool_remote_ip6"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} tmp_dir"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} openvpn_ldapcmd_tmp_template"
+OPENVPN_LDAPCMD_VAR_LIST="${OPENVPN_LDAPCMD_VAR_LIST} openvpn_ldapcmd_ldap_filter"
+
+
+openvpn_ldapcmd_client_connect()
+{
+   # generate temp file
+   openvpn_ldapcmd_gen_temp_file || return 1
+
+   openvpn-ldapcmd ${@}
+   RC=$?
+
+   echo ""
+   echo "Dynamic Client Config:"
+   sed -e 's/^/   /g' "${openvpn_ldapcmd_tmp_file}"
+   echo ""
+
+   echo ""
+   echo "Result: $RC"
+   echo ""
+
+   return $RC
+}
+
+
+openvpn_ldapcmd_client_disconnect()
+{
+   openvpn-ldapcmd ${@}
+   RC=$?
+
+   echo ""
+   echo "Result: $RC"
+   echo ""
+
+   return $RC
+}
+
+
+openvpn_ldapcmd_cleanup()
+{
+   test ! -z "${openvpn_ldapcmd_tmp_file}" \
+      && rm -f "${openvpn_ldapcmd_tmp_file}"
+}
+
+
+openvpn_ldapcmd_gen_temp_file()
+{
+   unset openvpn_ldapcmd_tmp_file
+   openvpn_ldapcmd_tmp_file=$(mktemp "${openvpn_ldapcmd_tmp_template}")
+   if test -z "${openvpn_ldapcmd_tmp_file}";then
+      return 1
+   fi
+}
+
+
 openvpn_ldapcmd_setup()
 {
-   if test "x${OPENVPN_LDAPCMD_SETUP}" == "xyes";then
-      return 0
-   fi
-   export OPENVPN_LDAPCMD_SETUP=yes
-   export config=/etc/openvpn/openvpn.ovpn
-   export daemon=1
-   export daemon_log_redirect=0
-   export daemon_pid=24764
-   export daemon_start_time=$(($(date +%s)-3600))
-   export dev=ovpn
-   export dev_type=tun
-   export ifconfig_broadcast=10.0.48.223
-   export ifconfig_ipv6_local=2001:4948:d:1194::1
-   export ifconfig_ipv6_netbits=64
-   export ifconfig_ipv6_remote=2001:4948:d:1194::2
-   export ifconfig_local=10.0.48.193
-   export ifconfig_netmask=255.255.255.224
-   export link_mtu=1621
-   export local_1=107.152.127.18
-   export local_port_1=1194
-   export proto_1=udp
-   export redirect_gateway=0
-   export remote_port_1=1194
-   export script_context=init
-   export tun_mtu=1500
-   export untrusted_ip=107.152.127.19
-   export untrusted_port=35874
-   export verb=3
+   unset openvpn_ldapcmd_tmp_file
+
+   common_name=${common_name:-${USER}}
+   username=${username:-${common_name}}
+   export common_name username
+
+   script_context=${script_context:-init}
+   script_type=${script_type:-user-pass-verify}
+   config=${config:-/etc/openvpn/openvpn.ovpn}
+   export config script_context script_type
+
+   trusted_ip=${trusted_ip:-107.152.127.19}
+   untrusted_ip=${untrusted_ip:-107.152.127.19}
+   export untrusted_ip trusted_ip
+
+   ifconfig_pool_remote_ip=${ifconfig_pool_remote_ip:-10.0.48.194}
+   ifconfig_pool_remote_ip6=${ifconfig_pool_remote_ip6:-2001:4948:d:1194::1000}
+   export ifconfig_pool_remote_ip ifconfig_pool_remote_ip6
+
+   tmp_dir=${tmp_dir:-/dev/shm}
+   openvpn_ldapcmd_tmp_template=${openvpn_ldapcmd_tmp_template:-${tmp_dir}/debug-openvpn-ldapcmd-XXXXXXXXXXXX}
+   openvpn_ldapcmd_ldap_filter=${openvpn_ldapcmd_ldap_filter:-(&(uid=%u)(openvpnUserStatus=active))}
+
+   CONTINUE=whoknows
+   while test "x${CONTINUE}" != "xyes";do
+      if test "x${CONTINUE}" == "xno";then
+         echo " "
+         echo "OpenVPN LDAP Command Environment:"
+         for VAR in ${OPENVPN_LDAPCMD_VAR_LIST};do
+            read -p "   $VAR [${!VAR}]: " INPUT
+            if test "${INPUT}" != "${INPUT// }";then
+               INPUT="\"${INPUT}\""
+            fi
+            eval "$VAR=${INPUT:-\"${!VAR}\"}"
+         done
+      fi
+
+      echo ""
+      echo "Environmental Variables:"
+      for VAR in script_type script_context ${OPENVPN_LDAPCMD_VAR_LIST} SKIP_PROMPTS;do
+         printf "   %-30s %s\n" "${VAR}:"  "${!VAR:-n/a}"
+      done
+
+      echo ""
+      if test "x${SKIP_PROMPTS}" == "xyes";then
+         INPUT=yes
+      else
+         read -p "Is the above correct (yes/no/abort)? " INPUT
+      fi
+
+      CONTINUE=$(echo $INPUT |tr A-Z a-z)
+      if test "x${CONTINUE}" == "xabort";then
+         exit 1
+      fi
+   done
+
+   OPENVPN_LDAPCMD_SETUP=yes
+   export OPENVPN_LDAPCMD_SETUP
+}
+
+
+openvpn_ldapcmd_user_pass_verify()
+{
+   # generate temp file
+   openvpn_ldapcmd_gen_temp_file || return 1
+
+   # read user's password
+   read -s -p "Enter ${username}'s password: " password
+   echo ''
+
+   # populate auth file
+   echo "${username}" > "${openvpn_ldapcmd_tmp_file}"
+   set |grep '^password=' |cut -d= -f2 |head -1 >> "${openvpn_ldapcmd_tmp_file}"
+   unset password
+
+   openvpn-ldapcmd ${@}
+   RC=$?
+
+   echo ""
+   echo "Result: $RC"
+   echo ""
+
+   return $RC
+}
+
+
+openvpn_ldapcmd_version()
+{
+   echo "openvpn-ldapcmd.profile (@PACKAGE_TARNAME@) @GIT_PACKAGE_VERSION_BUILD@ ..."
 }
 
 # end of bash profile

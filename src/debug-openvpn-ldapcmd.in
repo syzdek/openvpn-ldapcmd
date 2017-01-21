@@ -33,13 +33,86 @@
 #   @SYZDEK_BSD_LICENSE_END@
 #
 
-if test -f @pkgdatadir@/openvpn-ldapcmd.profile;then
-   . @pkgdatadir@/openvpn-ldapcmd.profile
-elif test -f @builddir@/src/openvpn-ldapcmd.profile;then
+PROG_NAME=$(basename ${0})
+export PROG_NAME
+
+
+# loads shared profile
+if test "x@builddir@" == "x$(pwd)";then
+   PATH=@builddir@/src/:${PATH}
+   export PATH
    . @builddir@/src/openvpn-ldapcmd.profile
+else
+   . @pkgdatadir@/openvpn-ldapcmd.profile
 fi
 
-echo "test"
+
+trap 'openvpn_ldapcmd_cleanup' QUIT
+trap 'openvpn_ldapcmd_cleanup' INT
+trap 'openvpn_ldapcmd_cleanup' HUP
+
+
+script_type="${1}"
+case "${script_type}" in
+   user-pass-verify|client-connect|client-disconnect)
+   ;;
+
+   --help)
+   echo "Usage: $PROG_NAME scripttype pattern [ OPTIONS ]"
+   cat << "   EOF" |sed -e 's/^      //g'
+      SCRIPT TYPES:
+         user-pass-verify
+         client-connect
+         client-disconnect
+      PATTERN:
+         See 'openvpn-ldapcmd --help' for PATTERN.
+      OPTIONS:
+         See 'openvpn-ldapcmd --help' for OPTIONS.
+
+   EOF
+   exit 0
+   ;;
+
+   --version)
+   openvpn_ldapcmd_version
+   openvpn-ldapcmd --version
+   exit 0
+   ;;
+
+   *)
+   echo "${PROG_NAME}: invalid or missing script type" 2>&1
+   echo "See '${PROG_NAME} --help' for more information." 2>&1
+   exit 1
+   ;;
+esac
+shift
+
+
+SKIP_PROMPTS=${SKIP_PROMPTS:-yes} openvpn_ldapcmd_setup
+
+
+case "${script_type}" in
+   user-pass-verify)
+   openvpn_ldapcmd_user_pass_verify ${@}
+   RC=$?
+   ;;
+
+   client-connect)
+   openvpn_ldapcmd_client_connect ${@}
+   RC=$?
+   ;;
+
+   *)
+   openvpn_ldapcmd_client_disconnect ${@}
+   RC=$?
+   ;;
+esac
+
+
+openvpn_ldapcmd_cleanup
+
+
+exit $RC
 
 
 # end of script
